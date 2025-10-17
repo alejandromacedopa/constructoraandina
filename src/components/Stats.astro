@@ -1,0 +1,58 @@
+---
+const items = [
+  { target: 150, label: 'Proyectos entregados', suffix: '+' },
+  { target: 98,  label: 'Satisfacción',         suffix: '%' },
+  { target: 15,  label: 'Años de experiencia',  suffix: '+' },
+  { target: 0,   label: 'Accidentes mayores',   suffix: ''  },
+];
+---
+<section class="section">
+  <div class="container grid grid-cols-2 md:grid-cols-4 gap-6">
+    {items.map((s)=>(
+      <div class="card p-6 text-center">
+        <div class="text-3xl font-extrabold text-blue-600">
+          <span class="odometer" data-target={String(s.target)} data-suffix={s.suffix}>0</span>
+        </div>
+        <div class="text-sm text-gray-600 dark:text-gray-300">{s.label}</div>
+      </div>
+    ))}
+  </div>
+
+  <!-- contador robusto -->
+  <script is:inline>
+  (() => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    /** @type {NodeListOf<HTMLElement>} */ const els = document.querySelectorAll('.odometer');
+    if (!els.length) return;
+
+    const animate = (el) => {
+      if (el.dataset.done) return; el.dataset.done = '1';
+      const end = Number(el.dataset.target || '0');
+      const dur = Number(el.dataset.duration || '1200');
+      const prefix = el.dataset.prefix ?? ''; const suffix = el.dataset.suffix ?? '';
+      const t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        const val = Math.round(end * ease(p));
+        el.textContent = `${prefix}${val}${suffix}`;
+        if (p < 1) requestAnimationFrame(step); else el.textContent = `${prefix}${end}${suffix}`;
+      };
+      requestAnimationFrame(step);
+    };
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          /** @type {HTMLElement} */ // @ts-ignore
+          const el = entry.target; animate(el); io.unobserve(el);
+        });
+      }, { threshold: 0.25 });
+      els.forEach((el) => { const pre=el.dataset.prefix??''; const suf=el.dataset.suffix??''; el.textContent=`${pre}0${suf}`; io.observe(el); });
+    } else {
+      els.forEach((el) => { const pre=el.dataset.prefix??''; const suf=el.dataset.suffix??''; el.textContent=`${pre}${el.dataset.target||'0'}${suf}`; });
+    }
+  })();
+  </script>
+</section>

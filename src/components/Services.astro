@@ -1,0 +1,22 @@
+---
+const servicios = [
+  { title:'Edificación residencial', desc:'Casas, dúplex y multifamiliares premium.', icon:'🏠' },
+  { title:'Construcción comercial',   desc:'Locales, oficinas y almacenes.',        icon:'🏢' },
+  { title:'Remodelaciones integrales',desc:'Refuerzo estructural y eficiencia.',     icon:'🛠️' },
+  { title:'Supervisión de obra',      desc:'Calidad, seguridad y cronograma.',       icon:'📋' },
+];
+---
+<section id="servicios" class="section">
+  <div class="container">
+    <h2 class="h2 mb-8">Servicios</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {servicios.map((s)=>(
+        <article class="card p-6 hover:shadow-lg transition">
+          <div class="text-3xl">{s.icon}</div>
+          <h3 class="mt-3 font-semibold">{s.title}</h3>
+          <p class="mt-1 text-gray-600 dark:text-gray-300 text-sm">{s.desc}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

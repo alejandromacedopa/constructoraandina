@@ -1,0 +1,20 @@
+---
+const faqs = [
+  { q:'¿Trabajan con contrato y cronograma?', a:'Sí, entregamos contrato, cronograma y plan de calidad.' },
+  { q:'¿Brindan garantía?', a:'Garantía por especialidad y manual de mantenimiento.' },
+  { q:'¿Atención fuera de Tarapoto?', a:'Sí, atendemos proyectos a nivel regional.' },
+];
+---
+<section class="section">
+  <div class="container">
+    <h2 class="h2 mb-8">Preguntas frecuentes</h2>
+    <div class="space-y-4">
+      {faqs.map((f)=>(
+        <details class="card p-6">
+          <summary class="cursor-pointer font-semibold">{f.q}</summary>
+          <p class="mt-2 text-gray-600 dark:text-gray-300">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

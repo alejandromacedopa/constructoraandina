@@ -1,0 +1,41 @@
+---
+---
+<section id="contacto" class="section">
+  <div class="container grid md:grid-cols-2 gap-10 items-start">
+    <div>
+      <h2 class="h2">Hablemos de tu proyecto</h2>
+      <p class="lead mt-2">Cuéntanos sobre tu idea: metrados, plazos y presupuesto estimado.</p>
+      <ul class="mt-6 text-sm text-gray-600 dark:text-gray-300 space-y-2">
+        <li>📍 Jr. Principal 123, Tarapoto</li>
+        <li>📞 +51 999 888 777</li>
+        <li>✉️ contacto@constructora-andina.com</li>
+      </ul>
+    </div>
+
+    <form method="POST" action="https://submit-form.com/TU_ID" class="card p-6 space-y-4">
+      <input type="hidden" name="_redirect" value="/gracias" />
+      <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
+      <input type="hidden" name="origen" id="origen" />
+      <input type="hidden" name="utm" id="utm" />
+
+      <label class="block"><span class="text-sm">Nombre</span><input name="nombre" required class="mt-1 w-full" type="text" autocomplete="name" /></label>
+      <label class="block"><span class="text-sm">Email</span><input name="email" required class="mt-1 w-full" type="email" autocomplete="email" /></label>
+      <label class="block"><span class="text-sm">Teléfono</span><input name="telefono" class="mt-1 w-full" type="tel" autocomplete="tel" /></label>
+      <label class="block"><span class="text-sm">Tipo de obra</span>
+        <select name="tipo" class="mt-1 w-full"><option>Residencial</option><option>Comercial</option><option>Remodelación</option></select>
+      </label>
+      <label class="block"><span class="text-sm">Mensaje</span><textarea name="mensaje" class="mt-1 w-full" rows="4" placeholder="Metrados, plazos, presupuesto..."></textarea></label>
+      <button class="btn-primary w-full" type="submit">Enviar</button>
+
+      <script is:inline>
+      (() => {
+        if (typeof window === 'undefined' || typeof document === 'undefined') return;
+        const p = new URLSearchParams(location.search); const utm = {};
+        ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>{ const v=p.get(k); if(v) utm[k]=v; });
+        const $utm = document.getElementById('utm'); const $org = document.getElementById('origen');
+        if ($utm) $utm.value = JSON.stringify(utm); if ($org) $org.value = document.referrer || 'directo';
+      })();
+      </script>
+    </form>
+  </div>
+</section>

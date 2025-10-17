@@ -1,0 +1,29 @@
+---
+const pasos = [
+  { t:'Levantamiento', d:'Visita de obra, requerimientos y alcance.', img:'/images/process/process-supervision.avif' },
+  { t:'Presupuesto',   d:'Partidas, metrados y cronograma.',          img:'/images/process/process-quality.avif' },
+  { t:'Ejecución',     d:'Calidad, seguridad y control diario.',      img:'/images/process/process-safety.avif' },
+  { t:'Entrega',       d:'Recepción técnica, manual y garantía.',     img:'/images/bg-grid.avif' },
+];
+---
+<section id="proceso" class="section">
+  <div class="container">
+    <h2 class="h2 mb-8">Nuestro proceso</h2>
+    <ol class="relative border-s border-blue-200 dark:border-white/10 pl-6 space-y-8">
+      {pasos.map((p,i)=>(
+        <li class="relative">
+          <span class="absolute -left-[11px] top-1 size-5 rounded-full bg-blue-600 ring-4 ring-blue-100 dark:ring-blue-900/30"></span>
+          <div class="grid md:grid-cols-[240px_1fr] gap-6 items-center">
+            <figure class="rounded-xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10">
+              <img src={p.img} alt={p.t} width="640" height="420" loading="lazy" decoding="async" class="h-40 w-full object-cover" />
+            </figure>
+            <div>
+              <h3 class="font-semibold">{String(i+1).padStart(2,'0')} · {p.t}</h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm mt-1">{p.d}</p>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+---
+const rangos = [
+  { label:'50–120 m²',  base:480, prom:85  },
+  { label:'121–250 m²', base:450, prom:185 },
+  { label:'251–500 m²', base:420, prom:375 },
+];
+---
+<section class="section">
+  <div class="container card p-6">
+    <h2 class="h2">Estimador rápido (orientativo)</h2>
+    <div class="mt-4 grid md:grid-cols-3 gap-4">
+      <label class="block">
+        <span class="text-sm">Área del proyecto</span>
+        <select id="rango" class="mt-1 w-full">
+          {rangos.map((r,i)=>(<option value={i}>{r.label}</option>))}
+        </select>
+      </label>
+      <label class="block">
+        <span class="text-sm">Calidad de acabado</span>
+        <select id="acabado" class="mt-1 w-full">
+          <option value="1">Estándar</option>
+          <option value="1.15">Premium</option>
+          <option value="1.3">Alto estándar</option>
+        </select>
+      </label>
+      <div class="flex items-end">
+        <div class="text-2xl font-extrabold text-blue-600"><span id="total">S/ 0</span></div>
+      </div>
+    </div>
+    <p class="text-xs text-gray-500 mt-2">* Estimación referencial. Cotizamos exacto tras visita técnica.</p>
+    <div class="mt-4"><a href="#contacto" class="btn-primary">Quiero una cotización exacta</a></div>
+
+    <script is:inline>
+    (() => {
+      if (typeof window === 'undefined' || typeof document === 'undefined') return;
+      const precios = [480,450,420], m2 = [85,185,375];
+      const fmt = (n) => `S/ ${n.toLocaleString('es-PE')}`;
+      const R = document.getElementById('rango'), A = document.getElementById('acabado'), T = document.getElementById('total');
+      const calc = () => { const r=+R.value, a=+A.value; T.textContent = fmt(Math.round(m2[r]*precios[r]*a)); };
+      R.addEventListener('change', calc); A.addEventListener('change', calc); calc();
+    })();
+    </script>
+  </div>
+</section>

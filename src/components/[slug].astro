@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+
+
+type Proyecto = {
+  slug: string;
+  title: string;
+  img: string;
+  city: string;
+  area: string;
+  year: string;
+  resumen: string;
+  bullets: string[];
+  galeria?: {src: string; alt: string}[];
+};
+
+const proyectos: Proyecto[] = [
+  {
+    slug: "torre-andina",
+    title: "Torre Andina",
+    img: "/images/proyectos/torre-andina.webp",
+    city: "Tarapoto",
+    area: "7,500 m²",
+    year: "2024",
+    resumen: "Edificio multifamiliar con sistemas de seguridad y eficiencia energética.",
+    bullets: ["Estructura aporticada", "Fachada ventilada", "Certificación de seguridad"],
+    galeria: [
+      { src: "/images/hero.avif", alt: "Vista general de la obra" },
+      { src: "/images/process/process-quality.avif", alt: "Control de calidad" },
+      { src: "/images/process/process-safety.avif", alt: "Seguridad en obra" },
+    ],
+  },
+  {
+    slug: "residencial-el-pinar",
+    title: "Residencial El Pinar",
+    img: "/images/proyectos/residencial-pinar.avif",
+    city: "Moyobamba",
+    area: "3,200 m²",
+    year: "2023",
+    resumen: "Conjunto residencial con áreas comunes y acabados de alto estándar.",
+    bullets: ["Entrega anticipada", "Reducción de costos 12%", "Satisfacción del 98%"],
+  },
+  {
+    slug: "centro-empresarial-norte",
+    title: "Centro Empresarial Norte",
+    img: "/images/proyectos/centro-norte.webp",
+    city: "Tarapoto",
+    area: "5,100 m²",
+    year: "2022",
+    resumen: "Edificio de oficinas con espacios flexibles para PYMEs.",
+    bullets: ["Oficinas modulares", "Accesibilidad total", "Estacionamientos techados"],
+  },
+];
+
+export async function getStaticPaths() {
+  return proyectos.map((p) => ({ params: { slug: p.slug }, props: { proyecto: p } }));
+}
+
+const { proyecto } = Astro.props as { proyecto: Proyecto };
+---
+
+<BaseLayout title={`${proyecto.title} | Constructora Andina`} description={proyecto.resumen}>
+  <section class="relative overflow-hidden pt-24 pb-16">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-blue-50 to-white dark:from-slate-900 dark:to-slate-950"></div>
+    <div class="container grid lg:grid-cols-2 gap-10 items-start">
+      <figure class="rounded-2xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10">
+        <img src={proyecto.img} alt={proyecto.title} width="1200" height="800" class="w-full h-[420px] object-cover" loading="eager" decoding="async" />
+      </figure>
+
+      <header>
+        <p class="text-xs font-semibold px-3 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200 w-fit">
+          Proyecto construido
+        </p>
+        <h1 class="h1 mt-3">{proyecto.title}</h1>
+        <p class="lead mt-3">{proyecto.resumen}</p>
+
+        <ul class="mt-6 grid grid-cols-3 gap-3 text-sm">
+          <li class="rounded-xl border p-3 dark:border-white/10"><b>Ciudad</b><br/>{proyecto.city}</li>
+          <li class="rounded-xl border p-3 dark:border-white/10"><b>Área</b><br/>{proyecto.area}</li>
+          <li class="rounded-xl border p-3 dark:border-white/10"><b>Año</b><br/>{proyecto.year}</li>
+        </ul>
+
+        <ul class="mt-6 list-disc pl-6 text-gray-600 dark:text-gray-300">
+          {proyecto.bullets.map((b) => <li>{b}</li>)}
+        </ul>
+
+        <div class="mt-8 flex gap-3">
+          <a href="/#contacto" class="btn-primary">Cotizar proyecto similar</a>
+          <a href="/#proyectos" class="btn-outline">Volver a proyectos</a>
+        </div>
+      </header>
+    </div>
+
+    {proyecto.galeria && proyecto.galeria.length > 0 && (
+      <div class="container mt-12">
+        <h2 class="h2 mb-4">Galería</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          {proyecto.galeria.map((g) => (
+            <figure class="rounded-xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10">
+              <img src={g.src} alt={g.alt} width="1200" height="800" loading="lazy" decoding="async" class="w-full h-56 object-cover" />
+            </figure>
+          ))}
+        </div>
+      </div>
+    )}
+  </section>
+</BaseLayout>

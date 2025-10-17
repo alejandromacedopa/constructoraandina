@@ -1,0 +1,22 @@
+---
+import "../styles/global.css";
+const {
+  title = "Constructora Andina | Obras seguras y de alta calidad",
+  description = "Edificaciones residenciales y comerciales con estándares ISO, entregas a tiempo y transparencia total.",
+  image = "/images/hero.avif",
+} = Astro.props;
+---
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title><meta name="description" content={description} />
+    <link rel="icon" href="/images/logo.svg" /><meta name="theme-color" content="#1562db" />
+    <meta property="og:title" content={title} /><meta property="og:description" content={description} />
+    <meta property="og:image" content={image} /><meta property="og:type" content="website" />
+    <link rel="canonical" href={`https://www.constructora-andina.com${Astro.url.pathname}`} />
+  </head>
+  <body>
+    <a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 bg-blue-600 text-white px-3 py-2 rounded">Saltar al contenido</a>
+    <slot />
+  </body>
+</html>
